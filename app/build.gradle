@@ -49,6 +49,8 @@ android {
 
 dependencies {
 
+    implementation project(':KotlinCommon')
+
     implementation common.core
     implementation compose.ui
     implementation compose.material
