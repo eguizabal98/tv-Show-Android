@@ -50,20 +50,12 @@ android {
 dependencies {
 
     implementation project(':KotlinCommon')
-
-    implementation common.core
-    implementation compose.ui
-    implementation compose.material
-    implementation compose.preview
-    implementation common.lifecycle
-    implementation common.activity_compose
+    implementation project(':AndroidCommon')
 
     testImplementation unit_test.junit
-
     androidTestImplementation android_test.ext
     androidTestImplementation android_test.espresso
     androidTestImplementation compose.test_junit
-
     debugImplementation compose.ui_tooling
     debugImplementation compose.test_manifest
 }
