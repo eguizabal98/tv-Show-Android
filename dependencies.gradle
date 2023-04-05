@@ -12,11 +12,11 @@ ext {
     coroutines_version = "1.6.4"
 
     common = [
-            core            : "androidx.core:core-ktx:$koltin_version",
-            lifecycle       : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version",
-            activity_compose: "androidx.activity:activity-compose:$activity_compose_version",
-            coroutines_core      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
-            coroutines_android      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+            core              : "androidx.core:core-ktx:$koltin_version",
+            lifecycle         : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version",
+            activity_compose  : "androidx.activity:activity-compose:$activity_compose_version",
+            coroutines_core   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version",
+            coroutines_android: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     ]
 
     //Compose
@@ -62,5 +62,13 @@ ext {
     ktor = [
             client: "io.ktor:ktor-client-core:$ktor_version",
             okhttp: "io.ktor:ktor-client-okhttp:$ktor_version"
+    ]
+
+    //SQLDelight
+    sqldelight = "1.5.4"
+
+    sqldelight = [
+            runtime       : "com.squareup.sqldelight:runtime:$sqldelight",
+            android_driver: "com.squareup.sqldelight:android-driver:$sqldelight"
     ]
 }
