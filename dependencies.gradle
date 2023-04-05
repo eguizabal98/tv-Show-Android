@@ -43,4 +43,13 @@ ext {
             ext     : "androidx.test.ext:junit:$android_ext_version",
             espresso: "androidx.test.espresso:espresso-core:$android_espresso_version"
     ]
+
+    //Hilt
+    hilt_version = "2.45"
+
+    hilt = [
+            android: "com.google.dagger:hilt-android:$hilt_version",
+            compiler: "com.google.dagger:hilt-compiler:$hilt_version",
+            android_test: "com.google.dagger:hilt-android-testing:$hilt_version",
+    ]
 }

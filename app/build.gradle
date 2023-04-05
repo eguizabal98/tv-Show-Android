@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'com.google.dagger.hilt.android'
 }
 apply from: '../dependencies.gradle'
 
@@ -52,10 +54,25 @@ dependencies {
     implementation project(':KotlinCommon')
     implementation project(':AndroidCommon')
 
+    implementation hilt.android
+    kapt hilt.compiler
+
+    // For instrumentation tests
+    androidTestImplementation hilt.android_test
+    kaptAndroidTest hilt.compiler
+
+    // For local unit tests
+    testImplementation hilt.android_test
+    kaptTest hilt.compiler
+
     testImplementation unit_test.junit
     androidTestImplementation android_test.ext
     androidTestImplementation android_test.espresso
     androidTestImplementation compose.test_junit
     debugImplementation compose.ui_tooling
     debugImplementation compose.test_manifest
+}
+
+kapt {
+    correctErrorTypes true
 }
