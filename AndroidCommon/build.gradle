@@ -39,4 +39,5 @@ dependencies {
     api compose.preview
     api common.lifecycle
     api common.activity_compose
+    api common.coroutines_android
 }
