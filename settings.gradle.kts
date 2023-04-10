@@ -4,8 +4,8 @@ pluginManagement {
         google()
         mavenCentral()
     }
-    apply from: 'dependencies.gradle'
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,7 +13,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "TvShowAndroid"
-include ':app'
-include ':KotlinCommon'
-include ':AndroidCommon'
+include("app")
+include("KotlinCommon")
+include("AndroidCommon")

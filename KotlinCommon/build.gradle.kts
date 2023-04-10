@@ -1,8 +1,7 @@
 plugins {
-    id 'java-library'
-    id 'org.jetbrains.kotlin.jvm'
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm")
 }
-apply from: '../dependencies.gradle'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -11,5 +10,5 @@ java {
 
 dependencies {
 
-    api common.coroutines_core
+    kotlinCommonApi()
 }
