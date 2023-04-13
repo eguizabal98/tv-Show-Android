@@ -18,3 +18,7 @@ rootProject.name = "TvShowAndroid"
 include("app")
 include("KotlinCommon")
 include("AndroidCommon")
+include(":domain")
+include(":data")
+include(":remotedata")
+include(":localdata")

@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -48,8 +47,14 @@ dependencies {
 
     implementation(project(":KotlinCommon"))
     implementation(project(":AndroidCommon"))
+    implementation(project(":domain"))
+    // Modules implementation only to Di Injection
+    implementation(project(":data"))
+    implementation(project(":localdata"))
+    implementation(project(":remotedata"))
 
-    hilt()
+    koin()
+    ktor()
 
     testing()
 }

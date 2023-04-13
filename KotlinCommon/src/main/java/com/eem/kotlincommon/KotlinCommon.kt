@@ -1,4 +1,3 @@
 package com.eem.kotlincommon
 
-class KotlinCommon {
-}
+class KotlinCommon

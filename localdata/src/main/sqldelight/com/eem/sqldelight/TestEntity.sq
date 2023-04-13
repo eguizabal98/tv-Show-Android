@@ -1,0 +1,15 @@
+CREATE TABLE Test_Entity (
+  test_Id INTEGER NOT NULL PRIMARY KEY,
+  test_name TEXT NOT NULL
+);
+
+getTest:
+SELECT *
+FROM Test_Entity LIMIT 1;
+
+insertTest:
+INSERT INTO Test_Entity(test_Id, test_name)
+VALUES (?, ?);
+
+clearTest:
+DELETE FROM Test_Entity;
