@@ -6,7 +6,7 @@ import com.eem.localdata.model.Test
 import kotlin.random.Random
 
 class LocalTestSourceImpl(
-    private val testDao: TestDao,
+    private val testDao: TestDao
 ) : LocalTestSource {
 
     override suspend fun getTest(): String? = testDao.getTest()?.testName

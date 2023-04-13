@@ -38,7 +38,7 @@ val networkModule = module {
     }
 
     fun provideHttpClientAndroid(
-        movieApiCertificatePinner: CertificatePinner,
+        movieApiCertificatePinner: CertificatePinner
     ): HttpClient {
         return HttpClient(OkHttp) {
             expectSuccess = false
@@ -48,7 +48,6 @@ val networkModule = module {
                     override fun log(message: String) {
                         Timber.d(message)
                     }
-
                 }
                 level = LogLevel.ALL
             }
@@ -60,11 +59,13 @@ val networkModule = module {
             }
 
             install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
+                json(
+                    Json {
+                        prettyPrint = true
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
 
             install(ResponseObserver) {

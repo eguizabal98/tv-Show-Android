@@ -6,10 +6,9 @@ import com.eem.domain.repository.TestRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
 class TestRepositoryImpl(
     private val remoteTestSource: RemoteTestSource,
-    private val localTestSource: LocalTestSource,
+    private val localTestSource: LocalTestSource
 ) : TestRepository {
 
     override suspend fun getHtml(): Flow<String> = flow {
