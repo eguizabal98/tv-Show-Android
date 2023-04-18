@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.eem.domain.interactor.TestUseCase
+import com.eem.domain.model.result.ResultWrapper
 import com.eem.tvshowandroid.ui.theme.TvShowAndroidTheme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -30,16 +31,28 @@ class MainActivity : ComponentActivity() {
         setContent {
             TvShowAndroidTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
                     val scope = rememberCoroutineScope()
                     var text by remember { mutableStateOf("Loading") }
                     LaunchedEffect(true) {
                         scope.launch {
                             testUseCase().collectLatest {
-                                text = try {
-                                    it
-                                } catch (e: Exception) {
-                                    e.localizedMessage ?: "error"
+                                text = when (it) {
+                                    is ResultWrapper.Error -> {
+                                        it.message ?: "Error"
+                                    }
+                                    ResultWrapper.Loading -> {
+                                        "Loading"
+                                    }
+                                    ResultWrapper.NetworkError -> {
+                                        "Network Error"
+                                    }
+                                    is ResultWrapper.Success -> {
+                                        it.data
+                                    }
                                 }
                             }
                         }

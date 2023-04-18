@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val remoteDataSourceModule = module {
 
-    factory { RemoteTestSourceImpl(get()) } bind RemoteTestSource::class
+    factory { RemoteTestSourceImpl(get(), get()) } bind RemoteTestSource::class
 }
