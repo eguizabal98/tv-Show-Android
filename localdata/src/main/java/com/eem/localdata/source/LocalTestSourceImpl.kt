@@ -9,7 +9,9 @@ class LocalTestSourceImpl(
     private val testDao: TestDao
 ) : LocalTestSource {
 
-    override suspend fun getTest(): String? = testDao.getTest()?.testName
+    override suspend fun getTest(): com.eem.data.model.Test? = testDao.getTest()?.testName?.let {
+        com.eem.data.model.Test(it)
+    }
 
     override suspend fun insertTest(test: String) {
         clearTest()

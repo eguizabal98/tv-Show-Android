@@ -16,7 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.eem.domain.interactor.TestUseCase
+import com.eem.domain.interactor.authentication.GetGuestTokenUseCase
 import com.eem.domain.model.result.ResultWrapper
 import com.eem.tvshowandroid.ui.theme.TvShowAndroidTheme
 import kotlinx.coroutines.flow.collectLatest
@@ -25,7 +25,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
 
-    private val testUseCase: TestUseCase by inject()
+    private val getGuestTokenUseCase: GetGuestTokenUseCase by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     var text by remember { mutableStateOf("Loading") }
                     LaunchedEffect(true) {
                         scope.launch {
-                            testUseCase().collectLatest {
+                            getGuestTokenUseCase().collectLatest {
                                 text = when (it) {
                                     is ResultWrapper.Error -> {
                                         it.message ?: "Error"
@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                                         "Network Error"
                                     }
                                     is ResultWrapper.Success -> {
-                                        it.data
+                                        it.data.guestSessionId
                                     }
                                 }
                             }
