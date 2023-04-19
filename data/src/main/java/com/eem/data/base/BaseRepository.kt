@@ -13,24 +13,24 @@ import kotlinx.coroutines.flow.transform
 
 abstract class BaseRepository(private val dispatcher: CoroutineDispatcher) {
 
-    fun <T> localAndFetch(
-        localSourceRequest: suspend () -> T?,
-        localSourceAction: suspend (T) -> T?,
-        remoteSourceRequest: suspend () -> Flow<ResponseWrapper<T>>,
-        shouldFetch: suspend (T?) -> Boolean
-    ): Flow<ResultWrapper<T>> = flow {
+    fun <T : Flow<ResponseWrapper<X>>, X : DomainMapper<S>, S> localAndFetch(
+        localSourceRequest: suspend () -> X?,
+        localSourceAction: suspend (X) -> X?,
+        remoteSourceRequest: suspend () -> T,
+        shouldFetch: suspend (X?) -> Boolean
+    ): Flow<ResultWrapper<S>> = flow {
         val localResponse = localSourceRequest()
         if (shouldFetch(localResponse)) {
             when (val remoteResponse = remoteSourceRequest().single()) {
                 is ResponseWrapper.Success -> {
-                    val localResult = sanityResponse(localSourceAction(remoteResponse.data))
+                    val localResult = sanityResponse(localSourceAction(remoteResponse.data)?.mapToDomainModel())
                     emit(localResult)
                 }
                 is ResponseWrapper.Error -> emit(ResultWrapper.Error(remoteResponse.error?.message))
                 is ResponseWrapper.NetworkError -> emit(ResultWrapper.NetworkError)
             }
         } else {
-            emit(sanityResponse(localResponse))
+            emit(sanityResponse(localResponse?.mapToDomainModel()))
         }
     }.onStart {
         emit(ResultWrapper.Loading)
