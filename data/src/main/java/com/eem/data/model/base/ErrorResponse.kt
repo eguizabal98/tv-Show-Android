@@ -1,4 +1,4 @@
-package com.eem.data.model
+package com.eem.data.model.base
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
