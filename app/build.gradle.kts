@@ -53,6 +53,7 @@ dependencies {
     implementation(project(":localdata"))
     implementation(project(":remotedata"))
 
+    splash()
     koin()
     ktor()
 

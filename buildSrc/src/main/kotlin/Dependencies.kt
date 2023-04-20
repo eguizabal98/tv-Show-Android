@@ -23,6 +23,7 @@ object Versions {
     const val sqlDelight = "1.5.4"
     const val timber = "5.0.1"
     const val hilt = "2.45"
+    const val splash = "1.0.0"
 
     const val junit = "4.13.2"
     const val androidExt = "1.1.5"
@@ -85,6 +86,14 @@ object TestLibs {
 object TestAndroidLibs {
     const val ext = "androidx.test.ext:junit:${Versions.androidExt}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.androidEspresso}"
+}
+
+object Splash {
+    const val splashscreen = "androidx.core:core-splashscreen:${Versions.splash}"
+}
+
+fun DependencyHandler.splash() {
+    implementation(Splash.splashscreen)
 }
 
 fun DependencyHandler.androidCommonApi() {
