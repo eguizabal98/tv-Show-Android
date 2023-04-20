@@ -17,6 +17,7 @@ object Versions {
     const val activityCompose = "1.7.0"
     const val coroutines = "1.6.4"
     const val compose = "1.4.0"
+    const val compose_material = "1.1.0-rc01"
     const val koin = "3.4.0"
     const val ktor = "2.2.4"
     const val sqlDelight = "1.5.4"
@@ -46,7 +47,9 @@ object KotlinCommon {
 object Compose {
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val ui = "androidx.compose.ui:ui:${Versions.compose}"
-    const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.compose_material}"
+    const val composeMaterialWindows3 =
+        "androidx.compose.material3:material3-window-size-class:${Versions.compose_material}"
     const val preview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val testJunit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
@@ -99,7 +102,8 @@ fun DependencyHandler.kotlinCommonApi() {
 fun DependencyHandler.composeApi() {
     api(Compose.activityCompose)
     api(Compose.ui)
-    api(Compose.material)
+    api(Compose.composeMaterial3)
+    api(Compose.composeMaterialWindows3)
     api(Compose.preview)
 }
 
