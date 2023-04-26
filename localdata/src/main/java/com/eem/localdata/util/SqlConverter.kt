@@ -1,6 +1,8 @@
 package com.eem.localdata.util
 
+import com.eem.data.model.authentication.DataSessionId
 import com.eem.localdata.model.Test
+import com.eem.sqldelight.Session_Id_Entity
 import com.eem.sqldelight.Test_Entity
 
 object SqlConverter {
@@ -16,4 +18,6 @@ object SqlConverter {
         testId = test_Id.toInt(),
         testName = test_name
     )
+
+    fun Session_Id_Entity.toData(): DataSessionId = DataSessionId(sessionId = session_id)
 }
