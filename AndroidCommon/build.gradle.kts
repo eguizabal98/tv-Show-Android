@@ -41,4 +41,5 @@ dependencies {
 
     androidCommonApi()
     composeApi()
+    koin()
 }

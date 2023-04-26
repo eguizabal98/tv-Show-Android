@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace = "com.eem.localdata"
-    compileSdk = 33
+    compileSdk = Apps.compileSdk
 
     defaultConfig {
-        minSdk = 27
-        targetSdk = 33
+        minSdk = Apps.minSdk
+        targetSdk = Apps.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

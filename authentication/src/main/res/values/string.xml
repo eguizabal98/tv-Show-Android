@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_background_content_description">Authentication Background Image</string>
+    <string name="auth_title">THE MOVIE DB</string>
+    <string name="auth_message">Todo sobre películas, series, anime y mucho más.</string>
+    <string name="auth_description">Mantente al tanto de la información sobre películas, series, anime y más.</string>
+    <string name="auth_button">Accesar</string>
+</resources>

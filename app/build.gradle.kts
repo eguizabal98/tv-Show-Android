@@ -52,6 +52,8 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":localdata"))
     implementation(project(":remotedata"))
+    // Ui Modules
+    implementation(project(":authentication"))
 
     splash()
     koin()

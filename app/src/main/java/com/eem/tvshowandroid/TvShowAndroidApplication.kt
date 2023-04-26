@@ -1,6 +1,8 @@
 package com.eem.tvshowandroid
 
 import android.app.Application
+import com.eem.androidcommon.ui.di.commonModule
+import com.eem.authentication.di.authUiModule
 import com.eem.data.di.repositoryModule
 import com.eem.domain.di.interactorModule
 import com.eem.localdata.di.dbModule
@@ -33,7 +35,9 @@ class TvShowAndroidApplication : Application() {
                     remoteDataSourceModule,
                     localDataSourceModule,
                     presenterModule,
-                    dbModule
+                    commonModule,
+                    dbModule,
+                    authUiModule
                 )
             )
         }
