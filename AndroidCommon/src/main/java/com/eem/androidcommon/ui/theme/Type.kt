@@ -1,6 +1,7 @@
 package com.eem.androidcommon.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -14,12 +15,6 @@ private val medium = Font(R.font.raleway_medium, FontWeight.W500)
 private val semibold = Font(R.font.raleway_semibold, FontWeight.W600)
 
 private val craneFontFamily = FontFamily(fonts = listOf(light, regular, medium, semibold))
-
-val captionTextStyle = TextStyle(
-    fontFamily = craneFontFamily,
-    fontWeight = FontWeight.W400,
-    fontSize = 16.sp
-)
 
 val typo = Typography(
     displayLarge = TextStyle(fontFamily = craneFontFamily),
@@ -37,4 +32,25 @@ val typo = Typography(
     labelLarge = TextStyle(fontFamily = craneFontFamily),
     labelMedium = TextStyle(fontFamily = craneFontFamily),
     labelSmall = TextStyle(fontFamily = craneFontFamily)
+)
+
+val titleSmallTextStyle = typo.headlineLarge.copy(
+    color = Color.White,
+    fontSize = 22.sp,
+    fontWeight = FontWeight.Bold,
+    fontFamily = craneFontFamily
+)
+
+val titleLargeTextStyle = typo.headlineLarge.copy(
+    color = Color.White,
+    fontSize = 32.sp,
+    fontWeight = FontWeight.Normal,
+    fontFamily = craneFontFamily
+)
+
+val messageTextStyle = typo.headlineLarge.copy(
+    color = Color.White,
+    fontSize = 15.sp,
+    fontWeight = FontWeight.Normal,
+    fontFamily = craneFontFamily
 )

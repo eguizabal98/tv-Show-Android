@@ -16,14 +16,16 @@ object Versions {
     const val lifecycle = "2.6.1"
     const val activityCompose = "1.7.0"
     const val coroutines = "1.6.4"
-    const val compose = "1.4.0"
+    const val compose = "1.4.1"
     const val compose_material = "1.1.0-rc01"
+    const val compose_navigation = "2.5.3"
     const val koin = "3.4.0"
     const val ktor = "2.2.4"
     const val sqlDelight = "1.5.4"
     const val timber = "5.0.1"
     const val hilt = "2.45"
     const val splash = "1.0.0"
+    const val browser = "1.5.0"
 
     const val junit = "4.13.2"
     const val androidExt = "1.1.5"
@@ -52,6 +54,7 @@ object Compose {
     const val composeMaterialWindows3 =
         "androidx.compose.material3:material3-window-size-class:${Versions.compose_material}"
     const val preview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
+    const val navigation = "androidx.navigation:navigation-compose:${Versions.compose_navigation}"
     const val testJunit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val testManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
@@ -92,8 +95,16 @@ object Splash {
     const val splashscreen = "androidx.core:core-splashscreen:${Versions.splash}"
 }
 
+object Authentication {
+    const val chromeTab = "androidx.browser:browser:${Versions.browser}"
+}
+
 fun DependencyHandler.splash() {
     implementation(Splash.splashscreen)
+}
+
+fun DependencyHandler.authentication() {
+    implementation(Authentication.chromeTab)
 }
 
 fun DependencyHandler.androidCommonApi() {
@@ -114,6 +125,7 @@ fun DependencyHandler.composeApi() {
     api(Compose.composeMaterial3)
     api(Compose.composeMaterialWindows3)
     api(Compose.preview)
+    api(Compose.navigation)
 }
 
 fun DependencyHandler.compose() {

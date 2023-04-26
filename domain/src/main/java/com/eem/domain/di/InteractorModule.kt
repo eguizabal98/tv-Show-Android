@@ -4,11 +4,15 @@ import com.eem.domain.interactor.TestUseCase
 import com.eem.domain.interactor.TestUseCaseImpl
 import com.eem.domain.interactor.authentication.GetGuestTokenUseCase
 import com.eem.domain.interactor.authentication.GetGuestTokenUseCaseImpl
+import com.eem.domain.interactor.authentication.GetRequestTokenUseCase
+import com.eem.domain.interactor.authentication.GetRequestTokenUseCaseImpl
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val interactorModule = module {
 
-    factory { TestUseCaseImpl(get()) } bind TestUseCase::class
-    factory { GetGuestTokenUseCaseImpl(get()) } bind GetGuestTokenUseCase::class
+    factoryOf(::TestUseCaseImpl) bind TestUseCase::class
+    factoryOf(::GetGuestTokenUseCaseImpl) bind GetGuestTokenUseCase::class
+    factoryOf(::GetRequestTokenUseCaseImpl) bind GetRequestTokenUseCase::class
 }
