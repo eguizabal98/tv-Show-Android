@@ -4,13 +4,13 @@ import com.eem.data.datasource.remote.RemoteAuthenticationSource
 import com.eem.data.model.authentication.DataGuestToken
 import com.eem.data.model.authentication.DataRequestToken
 import com.eem.data.model.base.ResponseWrapper
-import com.eem.remotedata.api.TestApiService
+import com.eem.remotedata.api.AuthApiService
 import com.eem.remotedata.base.BaseRemoteSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 
 class RemoteAuthenticationSourceImpl(
-    private val testApiService: TestApiService,
+    private val testApiService: AuthApiService,
     dispatcher: CoroutineDispatcher
 ) : RemoteAuthenticationSource, BaseRemoteSource(dispatcher) {
 

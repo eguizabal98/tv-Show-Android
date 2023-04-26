@@ -5,15 +5,9 @@ import com.eem.remotedata.model.authentication.RemoteRequestToken
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.appendPathSegments
 
-class TestApiServiceImpl(private val httpClient: HttpClient) : TestApiService {
-
-    override suspend fun getTestText(): String {
-        val response = httpClient.get("https://ktor.io/docs/")
-        return response.bodyAsText()
-    }
+class AuthApiServiceImpl(private val httpClient: HttpClient) : AuthApiService {
 
     override suspend fun getGuestToken(): RemoteGuestToken = httpClient.get {
         url {
