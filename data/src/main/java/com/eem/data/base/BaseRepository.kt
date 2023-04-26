@@ -36,6 +36,22 @@ abstract class BaseRepository(private val dispatcher: CoroutineDispatcher) {
         emit(ResultWrapper.Loading)
     }.flowOn(dispatcher)
 
+    fun <T : Flow<ResponseWrapper<X>>, X : DomainMapper<S>, S> fetchAndSave(
+        remoteSourceRequest: suspend () -> T,
+        localSourceAction: suspend (X) -> X?
+    ): Flow<ResultWrapper<S>> = flow {
+        when (val remoteResponse = remoteSourceRequest().single()) {
+            is ResponseWrapper.Success -> {
+                val localResult = sanityResponse(localSourceAction(remoteResponse.data)?.mapToDomainModel())
+                emit(localResult)
+            }
+            is ResponseWrapper.Error -> emit(ResultWrapper.Error(remoteResponse.error?.message))
+            is ResponseWrapper.NetworkError -> emit(ResultWrapper.NetworkError)
+        }
+    }.onStart {
+        emit(ResultWrapper.Loading)
+    }.flowOn(dispatcher)
+
     suspend fun <T : Flow<ResponseWrapper<R>>, R : DomainMapper<W>, W> onlyRemoteFetch(
         remoteSourceRequest: suspend () -> T
     ): Flow<ResultWrapper<W>> {

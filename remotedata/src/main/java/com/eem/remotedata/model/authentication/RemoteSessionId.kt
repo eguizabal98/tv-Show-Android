@@ -13,5 +13,5 @@ data class RemoteSessionId(
     val sessionId: String
 ) : DataMapper<DataSessionId>() {
 
-    override fun mapToDataModel(): DataSessionId = DataSessionId(success, sessionId)
+    override fun mapToDataModel(): DataSessionId = DataSessionId(sessionId)
 }

@@ -35,9 +35,10 @@ import com.eem.androidcommon.ui.theme.titleLargeTextStyle
 import com.eem.androidcommon.ui.theme.titleSmallTextStyle
 import com.eem.authentication.BuildConfig
 import com.eem.authentication.R
+import com.eem.authentication.ui.AuthenticationViewModel.BaseEvent.OnOpenHome
 import com.eem.authentication.ui.AuthenticationViewModel.BaseEvent.OnShowCustomTab
 import com.eem.authentication.ui.AuthenticationViewModel.BaseEvent.OnShowSnackBar
-import com.eem.authentication.ui.AuthenticationViewModel.UIEvent.OnOpenCustomTab
+import com.eem.authentication.ui.AuthenticationViewModel.UIEvent.OnInitAuthentication
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -54,9 +55,11 @@ internal fun AuthenticationScreen(
                     is OnShowCustomTab -> {
                         openTab(context, event.token)
                     }
-
                     is OnShowSnackBar -> {
                         showSnackBar(event.message, SnackbarDuration.Short)
+                    }
+                    is OnOpenHome -> {
+                        showSnackBar("GO HOME", SnackbarDuration.Short)
                     }
                 }
             }
@@ -64,7 +67,10 @@ internal fun AuthenticationScreen(
     }
 
     LaunchedEffect(true) {
-        if (allow?.isNotEmpty() == true) showSnackBar("Success Login", SnackbarDuration.Short)
+        if (allow?.isNotEmpty() == true) {
+            showSnackBar("Success Login", SnackbarDuration.Short)
+            viewModel.getSessionId(allow)
+        }
     }
 
     Image(
@@ -114,7 +120,7 @@ internal fun AuthenticationScreen(
                     .fillMaxWidth()
                     .padding(top = 25.dp),
                 onClick = {
-                    viewModel.onUIEvent(OnOpenCustomTab)
+                    viewModel.onUIEvent(OnInitAuthentication)
                 }
             ) {
                 Text(text = stringResource(id = R.string.auth_button))

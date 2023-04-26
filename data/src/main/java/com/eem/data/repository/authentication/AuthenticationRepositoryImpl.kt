@@ -1,6 +1,7 @@
 package com.eem.data.repository.authentication
 
 import com.eem.data.base.BaseRepository
+import com.eem.data.datasource.local.LocalAuthenticationSource
 import com.eem.data.datasource.remote.RemoteAuthenticationSource
 import com.eem.data.model.authentication.DataSessionIdRequest
 import com.eem.domain.model.authentication.GuestToken
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 
 class AuthenticationRepositoryImpl(
     private val remoteAuthenticationSource: RemoteAuthenticationSource,
+    private val localAuthenticationSource: LocalAuthenticationSource,
     dispatcher: CoroutineDispatcher
 ) : AuthenticationRepository, BaseRepository(dispatcher) {
 
@@ -26,9 +28,15 @@ class AuthenticationRepositoryImpl(
     }
 
     override suspend fun getSessionId(sessionIdRequest: SessionIdRequest): Flow<ResultWrapper<SessionId>> =
-        onlyRemoteFetch {
-            remoteAuthenticationSource.getSessionId(
-                DataSessionIdRequest(sessionIdRequest.requestToken)
-            )
-        }
+        fetchAndSave(
+            remoteSourceRequest = {
+                remoteAuthenticationSource.getSessionId(
+                    DataSessionIdRequest(sessionIdRequest.requestToken)
+                )
+            },
+            localSourceAction = {
+                localAuthenticationSource.insertSessionId(it.sessionId)
+                localAuthenticationSource.getSessionId()
+            }
+        )
 }
