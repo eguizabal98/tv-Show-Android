@@ -11,14 +11,16 @@ const val HomeRoute = "home"
 
 fun NavGraphBuilder.homeScreen(
     showSnackBar: (String, SnackbarDuration) -> Unit,
-    onNavigateToAuthentication: () -> Unit
+    onNavigateToAuthentication: () -> Unit,
+    onNavigateToShowDetails: (showId: String) -> Unit
 ) {
     composable(
         route = HomeRoute
     ) {
         HomeScreen(
             showSnackBar = showSnackBar,
-            navigateToAuthentication = onNavigateToAuthentication
+            navigateToAuthentication = onNavigateToAuthentication,
+            onNavigateToShowDetails = onNavigateToShowDetails
         )
     }
 }

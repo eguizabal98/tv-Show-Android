@@ -48,7 +48,8 @@ import com.eem.home.ui.views.TvShowItem
 internal fun HomeScreen(
     showSnackBar: (String, SnackbarDuration) -> Unit = { _: String, _: SnackbarDuration -> },
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToAuthentication: () -> Unit = {}
+    navigateToAuthentication: () -> Unit = {},
+    onNavigateToShowDetails: (showId: String) -> Unit = {}
 ) {
     val lazyPagingItems = viewModel.getTvShows().collectAsLazyPagingItems()
 
@@ -152,10 +153,7 @@ internal fun HomeScreen(
             itemsPaging(lazyPagingItems) { tvShow ->
                 tvShow?.let {
                     TvShowItem(it) {
-                        showSnackBar(
-                            lazyPagingItems.itemCount.toString(),
-                            SnackbarDuration.Short
-                        )
+                        onNavigateToShowDetails(it.tvShowId.toString())
                     }
                 }
             }

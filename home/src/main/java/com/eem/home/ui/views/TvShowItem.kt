@@ -27,13 +27,13 @@ import com.eem.domain.model.tvshow.TvShowInfo
 import com.eem.home.R
 
 @Composable
-fun TvShowItem(tvShow: TvShowInfo, refresh: () -> Unit) {
+fun TvShowItem(tvShow: TvShowInfo, itemClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                refresh()
+                itemClick()
             },
         shape = RoundedCornerShape(10.dp)
     ) {
