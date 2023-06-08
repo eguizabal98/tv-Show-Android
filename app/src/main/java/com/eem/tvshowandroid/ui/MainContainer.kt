@@ -15,6 +15,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.eem.authentication.navigation.AuthenticationRoute
 import com.eem.authentication.navigation.authenticationScreen
+import com.eem.home.navigation.homeScreen
+import com.eem.home.navigation.navigateToHome
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -49,7 +51,15 @@ fun MyNavigation(
         startDestination = AuthenticationRoute,
         modifier = modifier
     ) {
-        authenticationScreen(showSnackBar = showSnackBar) {}
+        authenticationScreen(showSnackBar = showSnackBar) {
+            navController.navigateToHome {
+                it.popUpTo(AuthenticationRoute) {
+                    inclusive = true
+                }
+            }
+        }
+        homeScreen(showSnackBar = showSnackBar) {
+        }
     }
 }
 

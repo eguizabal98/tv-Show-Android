@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
+    <string name="on_tv">On Tv</string>
+    <string name="airing_today">Airing Today</string>
+    <string name="what_do_you_want_to_watch">What do you want to watch?</string>
+    <string name="filled_account">Filled Account</string>
+    <string name="poster_for">"Poster for "</string>
+</resources>

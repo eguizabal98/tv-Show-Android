@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -27,18 +28,23 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures.compose = true
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.compose
     }
     packagingOptions {
-        exclude("META-INF/{AL2.0,LGPL2.1}")
+        jniLibs {
+            excludes += setOf("META-INF/{AL2.0,LGPL2.1}")
+        }
+        resources {
+            excludes += setOf("META-INF/{AL2.0,LGPL2.1}")
+        }
     }
     namespace = "com.eem.tvshowandroid"
 }
@@ -50,14 +56,13 @@ dependencies {
     implementation(project(":domain"))
     // Modules implementation only to Di Injection
     implementation(project(":data"))
-    implementation(project(":localdata"))
-    implementation(project(":remotedata"))
     // Ui Modules
     implementation(project(":authentication"))
+    implementation(project(":home"))
 
     splash()
-    koin()
-    ktor()
+    hilt()
+    paging()
 
     testing()
 }

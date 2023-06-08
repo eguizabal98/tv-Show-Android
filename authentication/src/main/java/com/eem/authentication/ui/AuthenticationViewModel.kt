@@ -1,74 +1,81 @@
 package com.eem.authentication.ui
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.eem.androidcommon.R
 import com.eem.androidcommon.ui.base.BaseViewModel
-import com.eem.androidcommon.ui.base.ResourceProvider
 import com.eem.domain.interactor.authentication.GetRequestTokenUseCase
 import com.eem.domain.interactor.authentication.GetSessionIdUseCase
+import com.eem.domain.interactor.authentication.IsLoggedUseCase
 import com.eem.domain.model.authentication.SessionIdRequest
-import com.eem.domain.model.result.ResultWrapper
-import kotlinx.coroutines.flow.collectLatest
+import com.eem.domain.model.result.Failure
+import com.eem.domain.model.result.Loading
+import com.eem.domain.model.result.Success
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AuthenticationViewModel(
+@HiltViewModel
+class AuthenticationViewModel @Inject constructor(
     private val getRequestTokenUseCase: GetRequestTokenUseCase,
     private val getSessionIdUseCase: GetSessionIdUseCase,
-    private val resourceProvider: ResourceProvider
+    private val isLoggedUseCase: IsLoggedUseCase
 ) : BaseViewModel() {
 
     var uiState by mutableStateOf(UIState())
         private set
 
     private fun getGuestToken() = executeUseCase {
-        getRequestTokenUseCase().collectLatest {
-            when (it) {
-                ResultWrapper.Loading -> {
-                    startLoading()
-                }
+        when (val result = getRequestTokenUseCase()) {
+            Loading -> {
+                startLoading()
+            }
 
-                is ResultWrapper.Success -> {
-                    stopLoading()
-                    emitUiEvent(BaseEvent.OnShowCustomTab(it.data.requestToken))
-                }
+            is Success -> {
+                stopLoading()
+                emitUiEvent(BaseEvent.OnShowCustomTab(result.data.requestToken))
+            }
 
-                is ResultWrapper.Error -> {
-                    handleErrorState(it.message)
-                    stopLoading()
-                }
-
-                ResultWrapper.NetworkError -> {
-                    handleErrorState(resourceProvider.getString(R.string.network_error_message))
-                    stopLoading()
-                }
+            is Failure -> {
+                handleErrorState(result.httpError.throwable.message)
+                stopLoading()
             }
         }
     }
 
     fun getSessionId(token: String) = executeUseCase {
-        getSessionIdUseCase(SessionIdRequest(token)).collectLatest {
-            when (it) {
-                ResultWrapper.Loading -> {
-                    startLoading()
-                }
+        when (val result = getSessionIdUseCase(SessionIdRequest(token))) {
+            Loading -> {
+                startLoading()
+            }
 
-                is ResultWrapper.Success -> {
-                    stopLoading()
-                    Log.d("Session", it.data.sessionId)
+            is Success -> {
+                stopLoading()
+                emitUiEvent(BaseEvent.OnOpenHome)
+            }
+
+            is Failure -> {
+                handleErrorState(result.httpError.throwable.message)
+                stopLoading()
+            }
+        }
+    }
+
+    fun getIsLogged() = executeUseCase {
+        when (val result = isLoggedUseCase()) {
+            Loading -> {
+                startLoading()
+            }
+            is Success -> {
+                stopLoading()
+                if (result.data) {
                     emitUiEvent(BaseEvent.OnOpenHome)
+                } else {
+                    uiState = uiState.copy(showAuthentication = true)
                 }
-
-                is ResultWrapper.Error -> {
-                    handleErrorState(it.message)
-                    stopLoading()
-                }
-
-                ResultWrapper.NetworkError -> {
-                    handleErrorState(resourceProvider.getString(R.string.network_error_message))
-                    stopLoading()
-                }
+            }
+            is Failure -> {
+                handleErrorState(result.httpError.throwable.message)
+                stopLoading()
             }
         }
     }
@@ -102,6 +109,7 @@ class AuthenticationViewModel(
     }
 
     data class UIState(
-        val isLoading: Boolean = false
+        val isLoading: Boolean = false,
+        val showAuthentication: Boolean = false
     )
 }

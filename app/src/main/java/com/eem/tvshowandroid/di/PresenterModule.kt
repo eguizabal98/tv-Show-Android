@@ -1,6 +1,19 @@
 package com.eem.tvshowandroid.di
 
-import org.koin.dsl.module
+import com.eem.data.repository.base.CoroutineContextProvider
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val presenterModule = module {
+@Module
+@InstallIn(SingletonComponent::class)
+object PresenterModule {
+
+    @Singleton
+    @Provides
+    fun provideCoroutineContextProvider(): CoroutineContextProvider {
+        return CoroutineContextProvider()
+    }
 }

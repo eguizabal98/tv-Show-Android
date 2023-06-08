@@ -25,7 +25,8 @@ fun NavGraphBuilder.authenticationScreen(
     ) { backStackEntry ->
         AuthenticationScreen(
             showSnackBar = showSnackBar,
-            allow = backStackEntry.arguments?.getString(ALLOW_ARG)
+            allow = backStackEntry.arguments?.getString(ALLOW_ARG),
+            navigateToHome = onNavigateToHome
         )
     }
 }

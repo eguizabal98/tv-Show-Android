@@ -1,12 +1,18 @@
 package com.eem.domain.model.result
 
-sealed class ResultWrapper<out T> {
+sealed class ResultWrapper<out T>
 
-    data class Success<T>(val data: T) : ResultWrapper<T>()
+object Loading : ResultWrapper<Nothing>()
+data class Success<out T>(val data: T) : ResultWrapper<T>()
+data class Failure(val httpError: HttpError) : ResultWrapper<Nothing>()
 
-    data class Error(val message: String? = null) : ResultWrapper<Nothing>()
+class HttpError(val throwable: Throwable, val errorCode: Int = 0)
 
-    object Loading : ResultWrapper<Nothing>()
+inline fun <T> ResultWrapper<T>.onSuccess(action: (T) -> Unit): ResultWrapper<T> {
+    if (this is Success) action(data)
+    return this
+}
 
-    object NetworkError : ResultWrapper<Nothing>()
+inline fun <T> ResultWrapper<T>.onFailure(action: (HttpError) -> Unit) {
+    if (this is Failure) action(httpError)
 }

@@ -14,18 +14,26 @@ object Versions {
     const val kotlin = "1.9.0"
     const val kotlinSerialization = "1.5.0"
     const val lifecycle = "2.6.1"
+    const val lifecycleLiveData = "1.3.2"
     const val activityCompose = "1.7.0"
     const val coroutines = "1.6.4"
     const val compose = "1.4.1"
-    const val compose_material = "1.1.0-rc01"
+    const val composeFundation = "1.4.3"
+    const val coil = "2.4.0"
+    const val compose_material = "1.2.0-alpha02"
     const val compose_navigation = "2.5.3"
     const val koin = "3.4.0"
-    const val ktor = "2.2.4"
-    const val sqlDelight = "1.5.4"
+    const val retrofit = "2.9.0"
+    const val okHttp = "4.11.0"
+    const val gson = "2.10.1"
+    const val room = "2.5.1"
     const val timber = "5.0.1"
     const val hilt = "2.45"
     const val splash = "1.0.0"
     const val browser = "1.5.0"
+    const val composePaging = "1.0.0-alpha20"
+    const val androidPaging = "3.1.1"
+    const val hiltVersion = "2.44"
 
     const val junit = "4.13.2"
     const val androidExt = "1.1.5"
@@ -58,6 +66,14 @@ object Compose {
     const val testJunit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val testManifest = "androidx.compose.ui:ui-test-manifest:${Versions.compose}"
+    const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
+    const val fundation = "androidx.compose.foundation:foundation:${Versions.composeFundation}"
+    const val lifeCycle = "androidx.compose.runtime:runtime-livedata:${Versions.lifecycleLiveData}"
+}
+
+object Paging {
+    const val pagingCompose = "androidx.paging:paging-compose:${Versions.composePaging}"
+    const val paging3Android = "androidx.paging:paging-runtime:${Versions.androidPaging}"
 }
 
 object KoinInjection {
@@ -68,18 +84,25 @@ object KoinInjection {
     const val koinCompose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 }
 
+object Hilt {
+    const val hiltCore = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
+    const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.hiltVersion}"
+    const val hiltCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
+}
+
 object Network {
-    const val client = "io.ktor:ktor-client-core:${Versions.ktor}"
-    const val okhttp = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
-    const val serializate = "io.ktor:ktor-client-serialization:${Versions.ktor}"
-    const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
-    const val kotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
-    const val clientLogging = "io.ktor:ktor-client-logging-jvm:${Versions.ktor}"
+    const val client = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val okHtttpLogger = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 }
 
 object LocalDB {
-    const val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
-    const val android_driver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    const val roomKaptProcessor = "androidx.room:room-compiler:${Versions.room}"
+    const val roomCoroutines = "androidx.room:room-ktx:${Versions.room}"
+    const val roomPaging = "androidx.room:room-paging:${Versions.room}"
 }
 
 object TestLibs {
@@ -114,6 +137,10 @@ fun DependencyHandler.androidCommonApi() {
     api(AndroidCommon.timber)
 }
 
+fun DependencyHandler.timberAlone() {
+    implementation(AndroidCommon.timber)
+}
+
 fun DependencyHandler.kotlinCommonApi() {
     api(KotlinCommon.coroutinesCore)
     api(KotlinCommon.kotlinSerialization)
@@ -126,6 +153,9 @@ fun DependencyHandler.composeApi() {
     api(Compose.composeMaterialWindows3)
     api(Compose.preview)
     api(Compose.navigation)
+    api(Compose.coil)
+    api(Hilt.hiltCompose)
+    api(Compose.lifeCycle)
 }
 
 fun DependencyHandler.compose() {
@@ -147,18 +177,29 @@ fun DependencyHandler.koinCore() {
     testImplementation(KoinInjection.koinJUnit)
 }
 
-fun DependencyHandler.ktor() {
+fun DependencyHandler.hilt() {
+    implementation(Hilt.hiltCore)
+    kapt(Hilt.hiltCompiler)
+}
+
+fun DependencyHandler.retrofit() {
     implementation(Network.client)
     implementation(Network.okhttp)
-    implementation(Network.serializate)
-    implementation(Network.clientLogging)
-    implementation(Network.kotlinxJson)
-    implementation(Network.contentNegotiation)
+    implementation(Network.gson)
+    implementation(Network.retrofitGson)
+    implementation(Network.okHtttpLogger)
 }
 
 fun DependencyHandler.sqlDb() {
-    implementation(LocalDB.android_driver)
-    implementation(LocalDB.runtime)
+    implementation(LocalDB.roomRuntime)
+    implementation(LocalDB.roomCoroutines)
+    implementation(LocalDB.roomPaging)
+    kapt(LocalDB.roomKaptProcessor)
+}
+
+fun DependencyHandler.paging() {
+    implementation(Paging.pagingCompose)
+    implementation(Paging.paging3Android)
 }
 
 fun DependencyHandler.testing() {

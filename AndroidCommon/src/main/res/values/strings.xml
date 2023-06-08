@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filled_star">Filled Star</string>
+    <string name="half_filled_star">Half Filled Star</string>
+    <string name="outline_star">Outline Star</string>
+</resources>

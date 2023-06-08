@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.TvShowAndroidApp" parent="Theme.AppCompat.DayNight" >
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <style name="Theme.TvShowAndroidApp" parent="android:Theme.Material.Light.NoActionBar">
     </style>
 </resources>

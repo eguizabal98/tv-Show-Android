@@ -6,8 +6,9 @@ plugins {
     id("io.gitlab.arturbosch.detekt").version("1.23.0-RC1")
     id("org.jlleitschuh.gradle.ktlint") version "11.3.1"
     kotlin("plugin.serialization") version "1.8.10"
-    id("com.android.library") version "7.4.2" apply false
+    id("com.android.library") version "8.0.0" apply false
     id("org.jetbrains.kotlin.android") version "1.8.0" apply false
+    id("com.google.dagger.hilt.android") version "2.44" apply false
 }
 
 subprojects {

@@ -4,12 +4,12 @@ import com.eem.domain.model.authentication.SessionId
 import com.eem.domain.model.authentication.SessionIdRequest
 import com.eem.domain.model.result.ResultWrapper
 import com.eem.domain.repository.authentication.AuthenticationRepository
-import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetSessionIdUseCaseImpl(
+class GetSessionIdUseCaseImpl @Inject constructor(
     private val authenticationRepository: AuthenticationRepository
 ) : GetSessionIdUseCase {
 
-    override suspend fun invoke(sessionIdRequest: SessionIdRequest): Flow<ResultWrapper<SessionId>> =
+    override suspend fun invoke(sessionIdRequest: SessionIdRequest): ResultWrapper<SessionId> =
         authenticationRepository.getSessionId(sessionIdRequest)
 }

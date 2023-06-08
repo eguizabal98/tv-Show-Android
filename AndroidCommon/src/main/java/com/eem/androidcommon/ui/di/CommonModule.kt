@@ -1,11 +1,21 @@
 package com.eem.androidcommon.ui.di
 
+import android.content.Context
 import com.eem.androidcommon.ui.base.ResourceProvider
 import com.eem.androidcommon.ui.base.ResourceProviderImpl
-import org.koin.dsl.bind
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val commonModule = module {
+@Module
+@InstallIn(SingletonComponent::class)
+object CommonModule {
 
-    single { ResourceProviderImpl(get()) } bind ResourceProvider::class
+    @Singleton
+    @Provides
+    fun provideResourceProvider(context: Context): ResourceProvider {
+        return ResourceProviderImpl(context)
+    }
 }

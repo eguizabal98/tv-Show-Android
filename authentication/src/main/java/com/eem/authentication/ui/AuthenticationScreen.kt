@@ -28,6 +28,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.eem.androidcommon.ui.components.LoadingIndicator
 import com.eem.androidcommon.ui.theme.TvShowAndroidTheme
 import com.eem.androidcommon.ui.theme.messageTextStyle
@@ -39,13 +40,13 @@ import com.eem.authentication.ui.AuthenticationViewModel.BaseEvent.OnOpenHome
 import com.eem.authentication.ui.AuthenticationViewModel.BaseEvent.OnShowCustomTab
 import com.eem.authentication.ui.AuthenticationViewModel.BaseEvent.OnShowSnackBar
 import com.eem.authentication.ui.AuthenticationViewModel.UIEvent.OnInitAuthentication
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun AuthenticationScreen(
     showSnackBar: (String, SnackbarDuration) -> Unit = { _: String, _: SnackbarDuration -> },
-    viewModel: AuthenticationViewModel = koinViewModel(),
-    allow: String? = null
+    viewModel: AuthenticationViewModel = hiltViewModel(),
+    allow: String? = null,
+    navigateToHome: () -> Unit = {}
 ) {
     val context = LocalContext.current
     viewModel.apply {
@@ -55,11 +56,13 @@ internal fun AuthenticationScreen(
                     is OnShowCustomTab -> {
                         openTab(context, event.token)
                     }
+
                     is OnShowSnackBar -> {
                         showSnackBar(event.message, SnackbarDuration.Short)
                     }
+
                     is OnOpenHome -> {
-                        showSnackBar("GO HOME", SnackbarDuration.Short)
+                        navigateToHome()
                     }
                 }
             }
@@ -67,63 +70,66 @@ internal fun AuthenticationScreen(
     }
 
     LaunchedEffect(true) {
+        viewModel.getIsLogged()
         if (allow?.isNotEmpty() == true) {
             showSnackBar("Success Login", SnackbarDuration.Short)
             viewModel.getSessionId(allow)
         }
     }
 
-    Image(
-        modifier = Modifier.fillMaxSize(),
-        contentScale = ContentScale.Crop,
-        painter = painterResource(id = R.drawable.auth_background),
-        contentDescription = stringResource(id = R.string.auth_background_content_description)
-    )
-    Column(
-        modifier = Modifier.background(
-            Brush.verticalGradient(
-                colors = listOf(Color.Transparent, Color.Black)
-            )
+    if (viewModel.uiState.showAuthentication) {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
+            painter = painterResource(id = R.drawable.auth_background),
+            contentDescription = stringResource(id = R.string.auth_background_content_description)
         )
-    ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(30.dp),
-            verticalArrangement = Arrangement.Bottom
+            modifier = Modifier.background(
+                Brush.verticalGradient(
+                    colors = listOf(Color.Transparent, Color.Black)
+                )
+            )
         ) {
-            Text(
-                text = stringResource(id = R.string.auth_title),
-                style = titleSmallTextStyle
-            )
-            Text(
-                modifier = Modifier.padding(top = 20.dp),
-                text = buildAnnotatedString {
-                    append(stringResource(id = R.string.auth_message))
-                    addStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.Bold
-                        ),
-                        start = 10,
-                        end = 48
-                    )
-                },
-                style = titleLargeTextStyle
-            )
-            Text(
-                modifier = Modifier.padding(top = 25.dp),
-                text = stringResource(id = R.string.auth_description),
-                style = messageTextStyle
-            )
-            Button(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 25.dp),
-                onClick = {
-                    viewModel.onUIEvent(OnInitAuthentication)
-                }
+                    .fillMaxSize()
+                    .padding(30.dp),
+                verticalArrangement = Arrangement.Bottom
             ) {
-                Text(text = stringResource(id = R.string.auth_button))
+                Text(
+                    text = stringResource(id = R.string.auth_title),
+                    style = titleSmallTextStyle
+                )
+                Text(
+                    modifier = Modifier.padding(top = 20.dp),
+                    text = buildAnnotatedString {
+                        append(stringResource(id = R.string.auth_message))
+                        addStyle(
+                            style = SpanStyle(
+                                fontWeight = FontWeight.Bold
+                            ),
+                            start = 10,
+                            end = 48
+                        )
+                    },
+                    style = titleLargeTextStyle
+                )
+                Text(
+                    modifier = Modifier.padding(top = 25.dp),
+                    text = stringResource(id = R.string.auth_description),
+                    style = messageTextStyle
+                )
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 25.dp),
+                    onClick = {
+                        viewModel.onUIEvent(OnInitAuthentication)
+                    }
+                ) {
+                    Text(text = stringResource(id = R.string.auth_button))
+                }
             }
         }
     }
