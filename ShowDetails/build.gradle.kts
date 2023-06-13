@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.eem.home"
+    namespace = "com.eem.showdetails"
     compileSdk = Apps.compileSdk
 
     defaultConfig {

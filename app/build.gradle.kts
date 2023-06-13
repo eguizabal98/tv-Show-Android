@@ -59,6 +59,7 @@ dependencies {
     // Ui Modules
     implementation(project(":authentication"))
     implementation(project(":home"))
+    implementation(project(":ShowDetails"))
 
     splash()
     hilt()

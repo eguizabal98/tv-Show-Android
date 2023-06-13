@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,13 +26,13 @@ import com.eem.domain.model.tvshow.TvShowInfo
 import com.eem.home.R
 
 @Composable
-fun TvShowItem(tvShow: TvShowInfo, refresh: () -> Unit) {
+fun TvShowItem(tvShow: TvShowInfo, itemClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
-                refresh()
+                itemClick()
             },
         shape = RoundedCornerShape(10.dp)
     ) {
@@ -56,7 +55,6 @@ fun TvShowItem(tvShow: TvShowInfo, refresh: () -> Unit) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = tvShow.name,
-                    style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

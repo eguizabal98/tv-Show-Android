@@ -37,4 +37,7 @@ object DbModule {
 
     @Provides
     fun provideLastFilter(database: TvShowDataBase) = database.lastFilterDao()
+
+    @Provides
+    fun provideTvShowDetails(database: TvShowDataBase) = database.tvShowDetailsDao()
 }

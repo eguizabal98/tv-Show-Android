@@ -17,6 +17,9 @@ import com.eem.authentication.navigation.AuthenticationRoute
 import com.eem.authentication.navigation.authenticationScreen
 import com.eem.home.navigation.homeScreen
 import com.eem.home.navigation.navigateToHome
+import com.eem.showdetails.navigation.ShowDetailsRoute
+import com.eem.showdetails.navigation.navigateToShowDetails
+import com.eem.showdetails.navigation.showDetailsScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -58,7 +61,19 @@ fun MyNavigation(
                 }
             }
         }
-        homeScreen(showSnackBar = showSnackBar) {
+        homeScreen(
+            showSnackBar = showSnackBar,
+            onNavigateToAuthentication = {},
+            onNavigateToShowDetails = {
+                navController.navigateToShowDetails(it)
+            }
+        )
+        showDetailsScreen(showSnackBar = showSnackBar) {
+            navController.navigateToHome {
+                it.popUpTo(ShowDetailsRoute) {
+                    inclusive = true
+                }
+            }
         }
     }
 }

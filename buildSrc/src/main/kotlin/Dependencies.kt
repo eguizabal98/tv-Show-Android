@@ -34,6 +34,7 @@ object Versions {
     const val composePaging = "1.0.0-alpha20"
     const val androidPaging = "3.1.1"
     const val hiltVersion = "2.44"
+    const val constraint = "1.0.1"
 
     const val junit = "4.13.2"
     const val androidExt = "1.1.5"
@@ -69,6 +70,7 @@ object Compose {
     const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
     const val fundation = "androidx.compose.foundation:foundation:${Versions.composeFundation}"
     const val lifeCycle = "androidx.compose.runtime:runtime-livedata:${Versions.lifecycleLiveData}"
+    const val constraint = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraint}"
 }
 
 object Paging {
@@ -156,6 +158,7 @@ fun DependencyHandler.composeApi() {
     api(Compose.coil)
     api(Hilt.hiltCompose)
     api(Compose.lifeCycle)
+    api(Compose.constraint)
 }
 
 fun DependencyHandler.compose() {

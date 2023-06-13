@@ -10,6 +10,8 @@ import com.eem.domain.interactor.authentication.IsLoggedUseCase
 import com.eem.domain.interactor.authentication.IsLoggedUseCaseImpl
 import com.eem.domain.interactor.tvshow.GetLastFilterUseCase
 import com.eem.domain.interactor.tvshow.GetLastFilterUseCaseImpl
+import com.eem.domain.interactor.tvshow.GetTvShowDetailsUseCase
+import com.eem.domain.interactor.tvshow.GetTvShowDetailsUseCaseImpl
 import com.eem.domain.interactor.tvshow.GetTvShowUseCase
 import com.eem.domain.interactor.tvshow.GetTvShowUseCaseImpl
 import com.eem.domain.interactor.tvshow.SetFilterUseCase
@@ -43,4 +45,7 @@ abstract class InteractorModule {
 
     @Binds
     abstract fun bindSetFilterUseCase(impl: SetFilterUseCaseImpl): SetFilterUseCase
+
+    @Binds
+    abstract fun bindGetTvShowDetailsUseCase(impl: GetTvShowDetailsUseCaseImpl): GetTvShowDetailsUseCase
 }
