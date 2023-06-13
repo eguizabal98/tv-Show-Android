@@ -4,6 +4,7 @@ import com.eem.data.database.TvShowDataBase
 import com.eem.data.database.dao.LastFilterDao
 import com.eem.data.database.dao.SessionIdDao
 import com.eem.data.database.dao.TvShowDao
+import com.eem.data.database.dao.TvShowDetailsDao
 import com.eem.data.network.api.AuthApiService
 import com.eem.data.network.api.TvShowApiService
 import com.eem.data.network.networkstate.Connectivity
@@ -41,6 +42,9 @@ object RepositoryModule {
         service: TvShowApiService,
         tvShowDao: TvShowDao,
         tvShowDataBase: TvShowDataBase,
-        lastFilterDao: LastFilterDao
-    ): TvShowRepository = TvShowRepositoryImpl(service, tvShowDao, tvShowDataBase, lastFilterDao)
+        lastFilterDao: LastFilterDao,
+        tvShowDetailsDao: TvShowDetailsDao,
+        connectivity: Connectivity,
+        contextProvider: CoroutineContextProvider
+    ): TvShowRepository = TvShowRepositoryImpl(service, tvShowDao, tvShowDataBase, lastFilterDao, tvShowDetailsDao, connectivity, contextProvider)
 }

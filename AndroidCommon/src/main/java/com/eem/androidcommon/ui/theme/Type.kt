@@ -15,6 +15,21 @@ private val medium = Font(R.font.raleway_medium, FontWeight.W500)
 private val semibold = Font(R.font.raleway_semibold, FontWeight.W600)
 
 private val craneFontFamily = FontFamily(fonts = listOf(light, regular, medium, semibold))
+private val craneBaseStyle = TextStyle(fontFamily = craneFontFamily)
+
+val titleLargeTextStyle = craneBaseStyle.copy(
+    color = Color.White,
+    fontSize = 30.sp,
+    fontWeight = FontWeight.SemiBold,
+    fontFamily = craneFontFamily
+)
+
+val titleSmallTextStyle = craneBaseStyle.copy(
+    color = Color.White,
+    fontSize = 22.sp,
+    fontWeight = FontWeight.Bold,
+    fontFamily = craneFontFamily
+)
 
 val typo = Typography(
     displayLarge = TextStyle(fontFamily = craneFontFamily),
@@ -23,29 +38,15 @@ val typo = Typography(
     headlineLarge = TextStyle(fontFamily = craneFontFamily),
     headlineMedium = TextStyle(fontFamily = craneFontFamily),
     headlineSmall = TextStyle(fontFamily = craneFontFamily),
-    titleLarge = TextStyle(fontFamily = craneFontFamily),
+    titleLarge = titleLargeTextStyle,
     titleMedium = TextStyle(fontFamily = craneFontFamily),
-    titleSmall = TextStyle(fontFamily = craneFontFamily),
+    titleSmall = titleSmallTextStyle,
     bodyLarge = TextStyle(fontFamily = craneFontFamily),
     bodyMedium = TextStyle(fontFamily = craneFontFamily),
     bodySmall = TextStyle(fontFamily = craneFontFamily),
     labelLarge = TextStyle(fontFamily = craneFontFamily),
     labelMedium = TextStyle(fontFamily = craneFontFamily),
     labelSmall = TextStyle(fontFamily = craneFontFamily)
-)
-
-val titleSmallTextStyle = typo.headlineLarge.copy(
-    color = Color.White,
-    fontSize = 22.sp,
-    fontWeight = FontWeight.Bold,
-    fontFamily = craneFontFamily
-)
-
-val titleLargeTextStyle = typo.headlineLarge.copy(
-    color = Color.White,
-    fontSize = 32.sp,
-    fontWeight = FontWeight.Normal,
-    fontFamily = craneFontFamily
 )
 
 val messageTextStyle = typo.headlineLarge.copy(

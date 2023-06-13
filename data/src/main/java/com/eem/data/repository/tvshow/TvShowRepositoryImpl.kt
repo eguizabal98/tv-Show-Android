@@ -8,11 +8,17 @@ import androidx.paging.map
 import com.eem.data.database.TvShowDataBase
 import com.eem.data.database.dao.LastFilterDao
 import com.eem.data.database.dao.TvShowDao
+import com.eem.data.database.dao.TvShowDetailsDao
 import com.eem.data.database.model.tvshow.LastFilter
 import com.eem.data.network.api.TvShowApiService
+import com.eem.data.network.networkstate.Connectivity
+import com.eem.data.repository.base.BaseRepository
+import com.eem.data.repository.base.CoroutineContextProvider
+import com.eem.data.repository.base.getData
 import com.eem.domain.model.result.ResultWrapper
 import com.eem.domain.model.result.Success
 import com.eem.domain.model.tvshow.Filter
+import com.eem.domain.model.tvshow.TvShowDetails
 import com.eem.domain.model.tvshow.TvShowInfo
 import com.eem.domain.repository.tvshow.TvShowRepository
 import kotlinx.coroutines.flow.Flow
@@ -23,8 +29,11 @@ class TvShowRepositoryImpl(
     private val service: TvShowApiService,
     private val tvShowDao: TvShowDao,
     private val tvShowDataBase: TvShowDataBase,
-    private val lastFilterDao: LastFilterDao
-) : TvShowRepository {
+    private val lastFilterDao: LastFilterDao,
+    private val tvShowDetailsDao: TvShowDetailsDao,
+    connectivity: Connectivity,
+    contextProvider: CoroutineContextProvider
+) : TvShowRepository, BaseRepository(connectivity, contextProvider) {
 
     override fun getShows(): Flow<PagingData<TvShowInfo>> {
         return Pager(
@@ -57,6 +66,22 @@ class TvShowRepositoryImpl(
             Success(true)
         }
     }
+
+    override suspend fun getTvShowDetails(tvShowId: String): ResultWrapper<TvShowDetails> = fetchData(
+        apiDataProvider = {
+            service.getTvShowDetails(tvShowId).getData(
+                fetchFromCacheAction = {
+                    tvShowDetailsDao.getShowsDetails(tvShowId)
+                },
+                cacheAction = {
+                    tvShowDetailsDao.insert(it)
+                }
+            )
+        },
+        dbDataProvider = {
+            tvShowDetailsDao.getShowsDetails(tvShowId)
+        }
+    )
 
     companion object {
         private const val PAGE_SIZE = 20
