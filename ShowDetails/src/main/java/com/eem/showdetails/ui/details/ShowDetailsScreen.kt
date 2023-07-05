@@ -1,4 +1,4 @@
-package com.eem.showdetails.ui
+package com.eem.showdetails.ui.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -36,8 +36,8 @@ import com.eem.androidcommon.ui.theme.TvShowAndroidTheme
 import com.eem.domain.model.tvshow.TvShowDetails
 import com.eem.domain.model.tvshow.TvShowGenre
 import com.eem.showdetails.R
-import com.eem.showdetails.ui.ShowDetailsViewModel.BaseEvent.OnShowSnackBar
-import com.eem.showdetails.ui.ShowDetailsViewModel.UIState
+import com.eem.showdetails.ui.details.ShowDetailsViewModel.BaseEvent.OnShowSnackBar
+import com.eem.showdetails.ui.details.ShowDetailsViewModel.UIState
 
 @Composable
 internal fun showDetailsScreen(

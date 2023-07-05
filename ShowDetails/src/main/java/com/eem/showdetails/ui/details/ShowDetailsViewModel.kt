@@ -1,4 +1,4 @@
-package com.eem.showdetails.ui
+package com.eem.showdetails.ui.details
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

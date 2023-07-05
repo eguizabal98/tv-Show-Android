@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.eem.androidcommon.util.replaceNavArgument
-import com.eem.showdetails.ui.showDetailsScreen
+import com.eem.showdetails.ui.details.showDetailsScreen
 
 const val SHOW_ID_ARG = "showID"
 const val ShowDetailsRoute = "showDetails/{$SHOW_ID_ARG}"
